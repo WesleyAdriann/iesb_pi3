@@ -2,7 +2,7 @@ IESB - PI3
 ===
 
 ## Description
-Optimization project to create study groups in virtual learning environments developed during IESB PI3 using genetic algorithms
+Optimization project to create study groups in virtual learning environments developed in PI3 from IESB using genetic algorithms
 
 ## Prerequisites
 
