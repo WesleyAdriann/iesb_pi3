@@ -41,7 +41,7 @@ docker-compose up --build
 - Bruno Teodoro
   - Github: [brunoteodoromota](https://github.com/brunoteodoromota)
 - Lucas Simplicio
-  - Github:   
+  - Github: [lucas0806](https://github.com/lucas0806) 
 - Wesley Adriann
   - Github: [wesleyadriann](https://github.com/WesleyAdriann)
 
