@@ -62,3 +62,9 @@ class CreateGroup():
                 groups_mutate[i][mutation_point] = randint(0, 1000)
         self.__groups = groups_mutate
 
+if __name__ == "__main__":
+    ngroups = 5
+    student_per_group = 3
+    group = CreateGroup(ngroups, student_per_group)
+    group.create_group()
+    print(group.groups)
