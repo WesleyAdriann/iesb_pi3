@@ -21,6 +21,7 @@ class CreateGroup():
     def main(self, ngenerations = 3):
         self.create_group()
         for i in range(ngenerations):
+            self.fitness()
             print('gens')
             # pass
         print('Best group')
@@ -35,15 +36,17 @@ class CreateGroup():
         print(f'GROUPS {self.__groups}')
 
     def fitness(self):
+        self.__fitness = []
         for group in self.groups:
-            self.fitness.append(self.fitness_fn(group))
+            self.__fitness.append(self.fitness_fn(group))
+        print(f'FITNESS {self.__fitness}')
 
 
     def fitness_fn(self, group):
         fit = 0
         for student in group:
-            fit = fit + student
-        return fit
+            fit = fit + student.average
+        return fit / self.__students_per_group
 
 
     def selection(self):
