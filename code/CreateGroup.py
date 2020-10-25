@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint, random
+from models.Student import Student
 
 class CreateGroup():
     def __init__(self, ngroups, students_per_group, **kwargs):
@@ -17,9 +18,7 @@ class CreateGroup():
     def groups(self):
         return self.__groups
 
-    def main(self, ngenerations = 30):
-        # students_lim = [[0, 255]]*student_per_group
-        self.__students_lim = [[1, 90], [10, 90], [0, 23]]
+    def main(self, ngenerations = 3):
         self.create_group()
         for i in range(ngenerations):
             print('gens')
@@ -28,13 +27,12 @@ class CreateGroup():
         print(', '.join(self.__best_group))
 
     def create_group(self):
-        nstudents = len(self.__students_lim)
         for i in range(self.__ngroups):
             student = []
-            for j in range(nstudents):
-                lim_inf, lim_sup = self.__students_lim[j]
-                student.append(randint(0, 1000) * (lim_sup-lim_inf) + lim_inf)
+            for j in range(self.__students_per_group):
+                student.append(Student())
             self.__groups.append(student)
+        print(f'GROUPS {self.__groups}')
 
     def fitness(self):
         for group in self.groups:
@@ -66,5 +64,4 @@ if __name__ == "__main__":
     ngroups = 5
     student_per_group = 3
     group = CreateGroup(ngroups, student_per_group)
-    group.create_group()
-    print(group.groups)
+    group.main()
