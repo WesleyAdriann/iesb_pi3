@@ -19,6 +19,12 @@ class Student():
     def average(self):
         return self.__average
 
+    def random_note(self):
+        note = uniform(0, 11)
+        subjects = (self.__matematica,self.__portugues)
+        subjects[randrange(0, len(subjects), 1)].set_note(note)
+        self.calc_average()
+
     def calc_average(self):
         subjects = (self.__matematica,self.__portugues)
         self.__average = sum(subjects) / len(subjects)
