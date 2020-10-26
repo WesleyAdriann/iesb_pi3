@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 
-from random import randint, random, shuffle
+from random import randint, random, shuffle, randrange
 from models.Student import Student
 
 class CreateGroup():
@@ -23,6 +23,7 @@ class CreateGroup():
         self.create_group()
         for i in range(ngenerations):
             self.fitness()
+            self.mutate()
         print('Best group')
         print(', '.join(self.__best_group))
 
@@ -69,17 +70,15 @@ class CreateGroup():
         # self.__groups = new_groups
         return new_groups
 
-         
-
     def crossing(self):
         pass
 
     def mutate(self):
         groups_mutate = self.__groups[:]
-        for i, group in enumerate(groups_mutate):
+        for group in groups_mutate:
             if(random() < self.__rate_mutation):
-                mutation_point = randint(0, self.__students_per_group)
-                groups_mutate[i][mutation_point] = randint(0, 1000)
+                mutation_point = randrange(0, self.__students_per_group, 1)
+                group[mutation_point].random_note()
         self.__groups = groups_mutate
 
 if __name__ == "__main__":
