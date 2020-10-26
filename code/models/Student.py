@@ -26,5 +26,5 @@ class Student():
         self.calc_average()
 
     def calc_average(self):
-        subjects = (self.__matematica,self.__portugues)
-        self.__average = sum(subjects) / len(subjects)
+        subjects_notes = (self.__matematica.note, self.__portugues.note)
+        self.__average = sum(subjects_notes) / len(subjects_notes)
