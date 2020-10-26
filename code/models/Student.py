@@ -1,12 +1,14 @@
 
 # -*- coding: utf-8 -*-
 
-from random import uniform
+from random import uniform, randrange
+
+from models.Subject import Subject
 
 class Student():
     def __init__(self):
-        self.__matematica = uniform(0, 11)
-        self.__portugues = uniform(0, 11)
+        self.__matematica = Subject()
+        self.__portugues = Subject()
         self.__average = 0
         self.calc_average()
 
