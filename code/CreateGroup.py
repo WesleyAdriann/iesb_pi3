@@ -5,14 +5,14 @@ from random import randint, random, shuffle, randrange
 from models.Student import Student
 
 class CreateGroup():
-    def __init__(self, ngroups, students_per_group, **kwargs):
+    def __init__(self, ngroups, students_per_group, rate_mutation = 0.5):
         self.__ngroups = ngroups
         self.__students_lim = []
         self.__groups = []
         self.__best_group = []
         self.__fitness = []
         self.__students_per_group = students_per_group
-        self.__rate_mutation = kwargs.get('rate_mutation', 0.5)
+        self.__rate_mutation = rate_mutation
         # self.__roulette_rounds = kwargs.get('roulette_rounds', 2)
 
     @property
@@ -29,15 +29,15 @@ class CreateGroup():
 
     def create_group(self):
         for i in range(self.__ngroups):
-            student = []
+            group = []
             for j in range(self.__students_per_group):
-                student.append(Student())
-            self.__groups.append(student)
+                group.append(Student())
+            self.__groups.append(group)
         print(f'GROUPS {self.__groups}')
 
     def fitness(self):
         self.__fitness = []
-        for group in self.groups:
+        for group in self.__groups:
             self.__fitness.append(self.fitness_fn(group))
         print(f'FITNESS {self.__fitness}')
 
