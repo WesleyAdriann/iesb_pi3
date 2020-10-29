@@ -6,7 +6,8 @@ from random import uniform, randrange
 from models.Subject import Subject
 
 class Student():
-    def __init__(self):
+    def __init__(self, amount_subjects = 3):
+        self.__subjects = [Subject()]*amount_subjects
         self.__matematica = Subject()
         self.__portugues = Subject()
         self.__average = 0
