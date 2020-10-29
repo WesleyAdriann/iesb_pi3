@@ -12,7 +12,7 @@ Optimization project to create study groups in virtual learning environments dev
 ### Python CLI
 Inside the */code* directory execute
 ```bash
-python3 main.py
+python3 CreateGroup.py
 ```
 
 ### Docker
