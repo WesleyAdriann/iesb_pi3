@@ -14,5 +14,5 @@ class Subject():
     def note(self):
         return self.__note
 
-    def set_note(self, value):
-        self.__note = value
+    def set_random_note(self):
+        self.__note = uniform(0, 11)
