@@ -75,8 +75,6 @@ class CreateGroup():
             pai2 = self.__selected_groups[i+1]
             for i in range(cross_point):
                 pai1[i], pai2[i] = pai2[i], pai1[i]
-            
-
 
     def mutate(self):
         for group in self.__groups:
