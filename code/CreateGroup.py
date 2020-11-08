@@ -5,15 +5,15 @@ from random import randint, random, shuffle, randrange
 from models.Student import Student
 
 class CreateGroup():
-    def __init__(self, ngroups, students_per_group, rate_mutation = 0.5):
+    def __init__(self, ngroups, students_per_group, roulette_rounds = 2, rate_mutation = 0.5, ):
         self.__ngroups = ngroups
-        self.__students_lim = []
         self.__groups = []
         self.__best_group = []
         self.__fitness = []
+        self.__selected_groups = []
         self.__students_per_group = students_per_group
         self.__rate_mutation = rate_mutation
-        # self.__roulette_rounds = kwargs.get('roulette_rounds', 2)
+        self.__roulette_rounds = roulette_rounds
 
     @property
     def groups(self):
@@ -23,6 +23,8 @@ class CreateGroup():
         self.create_group()
         for i in range(ngenerations):
             self.fitness()
+            self.roulette_selection()
+            self.crossover()
             self.mutate()
         print('Best group')
         print(', '.join(self.__best_group))
@@ -33,13 +35,11 @@ class CreateGroup():
             for j in range(self.__students_per_group):
                 group.append(Student())
             self.__groups.append(group)
-        print(f'GROUPS {self.__groups}')
 
     def fitness(self):
         self.__fitness = []
         for group in self.__groups:
             self.__fitness.append(self.fitness_fn(group))
-        print(f'FITNESS {self.__fitness}')
 
 
     def fitness_fn(self, group):
@@ -49,29 +49,34 @@ class CreateGroup():
         return fit / self.__students_per_group
 
 
-    def selection(self):
+    def roulette_selection(self):
+        self.__selected_groups = []
         total_fitness = sum(self.__fitness)
         relative_fitness = []
         for fitness in self.__fitness:
             relative_fitness.append(fitness/total_fitness)
 
-        beta = 0.0
-        index_group = randint(0, self.__ngroups) 
-        max_capable = max(relative_fitness)
-        new_groups = []
+        probs = []
+        for i in range(len(relative_fitness)):
+            probs.append(sum(relative_fitness[:i+1]))
 
-        for i in range(self.__ngroups):
-            beta += random() * 2.0 * max_capable
-            while beta > relative_fitness[index_group]:
-                beta -= relative_fitness[index_group]
-                index_group = (index_group + 1) % self.__ngroups
-            new_groups.append(self.__groups[index_group])
-            shuffle(new_groups)
-        # self.__groups = new_groups
-        return new_groups
+        selected_groups = []
+        for roulette_round in range(self.__roulette_rounds):
+            for i, group in enumerate(self.__groups):
+                if random() <= probs[i]:
+                    selected_groups.append(group)
+                    break
+        self.__selected_groups = selected_groups
 
-    def crossing(self):
-        pass
+    def crossover(self):
+        for i in range(0, len(self.__selected_groups), 2):
+            cross_point = randrange(1, self.__students_per_group, 1)
+            pai1 = self.__selected_groups[i]
+            pai2 = self.__selected_groups[i+1]
+            for i in range(cross_point):
+                pai1[i], pai2[i] = pai2[i], pai1[i]
+            
+
 
     def mutate(self):
         groups_mutate = self.__groups[:]
