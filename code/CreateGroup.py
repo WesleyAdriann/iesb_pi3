@@ -20,7 +20,7 @@ class CreateGroup():
         return self.__groups
 
     def main(self, ngenerations = 3):
-        self.create_group()
+        self.create_groups()
         for i in range(ngenerations):
             self.fitness()
             self.roulette_selection()
@@ -29,7 +29,7 @@ class CreateGroup():
         print('Best group')
         print(', '.join(self.__best_group))
 
-    def create_group(self):
+    def create_groups(self):
         for i in range(self.__ngroups):
             group = []
             for j in range(self.__students_per_group):
@@ -79,15 +79,13 @@ class CreateGroup():
 
 
     def mutate(self):
-        groups_mutate = self.__groups[:]
-        for group in groups_mutate:
-            if(random() < self.__rate_mutation):
-                mutation_point = randrange(0, self.__students_per_group, 1)
-                group[mutation_point].random_note()
-        self.__groups = groups_mutate
+        for group in self.__groups:
+            if(random() >= self.__rate_mutation):
+                student = randrange(0, self.__students_per_group, 1)
+                group[student].mutate_note()
 
 if __name__ == "__main__":
     ngroups = 5
     student_per_group = 3
-    group = CreateGroup(ngroups, student_per_group)
+    group = CreateGroup(ngroups, student_per_group, 6)
     group.main()
