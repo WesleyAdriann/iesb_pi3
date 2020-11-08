@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 
-from random import uniform, randint
+from random import uniform, randrange
 
 from models.Subject import Subject
 
@@ -20,8 +20,8 @@ class Student():
     def average(self):
         return self.__average
 
-    def random_note(self):
-        self.__subjects[randint(0, len(self.__subjects) - 1)].set_random_note()
+    def mutate_note(self):
+        self.__subjects[randrange(0, len(self.__subjects), 1)].set_random_note()
         self.calc_average()
 
     def calc_average(self):
