@@ -5,7 +5,7 @@ from random import randint, random, shuffle, randrange
 from models.Student import Student
 
 class CreateGroup():
-    def __init__(self, ngroups, students_per_group, roulette_rounds = 2, rate_mutation = 0.5, ):
+    def __init__(self, ngroups, students_per_group, roulette_rounds = 2, rate_mutation = 0.5):
         self.__ngroups = ngroups
         self.__groups = []
         self.__best_group = []
@@ -20,8 +20,11 @@ class CreateGroup():
         return self.__groups
 
     def main(self, ngenerations = 3):
+        print('MAIN   |\n')
         self.create_groups()
         for i in range(ngenerations):
+            print(f'N: {i}')
+            print(f'GROUPS: {self.__groups}')
             self.fitness()
             self.roulette_selection()
             self.crossover()
@@ -41,13 +44,11 @@ class CreateGroup():
         for group in self.__groups:
             self.__fitness.append(self.fitness_fn(group))
 
-
     def fitness_fn(self, group):
         fit = 0
         for student in group:
             fit = fit + student.average
         return fit / self.__students_per_group
-
 
     def roulette_selection(self):
         self.__selected_groups = []
@@ -71,16 +72,22 @@ class CreateGroup():
     def crossover(self):
         for i in range(0, len(self.__selected_groups), 2):
             cross_point = randrange(1, self.__students_per_group, 1)
-            pai1 = self.__selected_groups[i]
-            pai2 = self.__selected_groups[i+1]
+            father = self.__selected_groups[i]
+            mother = self.__selected_groups[i+1]
+            print(f'B CROSSOVER: {father} {mother}')
             for i in range(cross_point):
-                pai1[i], pai2[i] = pai2[i], pai1[i]
+                father[i], mother[i] = mother[i], father[i]
+            print(f'A CROSSOVER: {father} {mother}')
+            print(f'------')
 
     def mutate(self):
         for group in self.__groups:
             if(random() >= self.__rate_mutation):
                 student = randrange(0, self.__students_per_group, 1)
                 group[student].mutate_note()
+
+    def get_best_group(self):
+        pass
 
 if __name__ == "__main__":
     ngroups = 5
