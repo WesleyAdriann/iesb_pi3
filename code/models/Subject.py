@@ -4,11 +4,12 @@
 from random import uniform
 
 class Subject():
-    def __init__(self):
-        self.__note = uniform(0, 11)
+    def __init__(self, name):
+        self.__note = uniform(0, 10.01)
+        self.__name = name
 
     def __repr__(self):
-        return "{:.2f}".format(self.__note)
+        return "{}: {:.2f}".format(self.__name, self.__note)
 
     @property
     def note(self):
