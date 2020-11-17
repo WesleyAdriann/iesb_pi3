@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 
-from random import randint, random, shuffle, randrange
+from random import randint, random
 from models.Student import Student
 
 class CreateGroup():
@@ -20,7 +20,7 @@ class CreateGroup():
         return self.__groups
 
     def main(self, ngenerations = 3):
-        print('MAIN   |\n')
+        print('MAIN|\n')
         self.create_groups()
         for i in range(ngenerations):
             print(f'N: {i}')
@@ -71,20 +71,22 @@ class CreateGroup():
 
     def crossover(self):
         for i in range(0, len(self.__selected_groups), 2):
-            cross_point = randrange(1, self.__students_per_group, 1)
+            cross_point = randint(0, self.__students_per_group - 1)
             father = self.__selected_groups[i]
             mother = self.__selected_groups[i+1]
-            print(f'B CROSSOVER: {father} {mother}')
+            print(f'BEFORE CROSSOVER: {father} {mother}')
             for i in range(cross_point):
                 father[i], mother[i] = mother[i], father[i]
-            print(f'A CROSSOVER: {father} {mother}')
+            print(f'AFTER CROSSOVER : {father} {mother}')
             print(f'------')
 
     def mutate(self):
         for group in self.__groups:
             if(random() >= self.__rate_mutation):
-                student = randrange(0, self.__students_per_group, 1)
-                group[student].mutate_note()
+                student = randint(0, self.__students_per_group - 1)
+                print(f'BEFORE MUTATE: {group[student]}')
+                group[student].mutate()
+                print(f'AFTER MUTATE : {group[student]}')
 
     def get_best_group(self):
         pass
