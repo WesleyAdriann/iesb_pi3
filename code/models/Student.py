@@ -17,7 +17,7 @@ class Student():
         self.__favorite_subject = self.__subjects_list[randint(0, len(self.__subjects_list) - 1)]
         self.__age = randint(18, 60)
         self.__average = 0
-        self.calc_average()
+        self.__calc_average()
 
     def __repr__(self):
         repr_string = f'Age: {self.__age} | Average: {self.__average:.2f} | Favorite Subject: {self.__favorite_subject} | Subjects: {self.__subjects}'
@@ -27,10 +27,20 @@ class Student():
     def average(self):
         return self.__average
 
-    def mutate_note(self):
-        self.__subjects[randrange(0, len(self.__subjects), 1)].set_random_note()
-        self.calc_average()
+    def mutate(self):
+        mutations_types = [self.__mutate_note, self.__mutate_age, self.__mutate_favorite_subject]
+        mutations_types[randint(0, len(mutations_types) - 1)]()
 
-    def calc_average(self):
+    def __mutate_note(self):
+        self.__subjects[randint(0, len(self.__subjects) - 1)].set_random_note()
+        self.__calc_average()
+
+    def __mutate_age(self):
+        self.__age = randint(18, 60)
+
+    def __mutate_favorite_subject(self):
+        self.__favorite_subject = self.__subjects_list[randint(0, len(self.__subjects_list) - 1)]
+
+    def __calc_average(self):
         subjects_notes = [subject.note for subject in self.__subjects]
         self.__average = sum(subjects_notes) / len(subjects_notes)
