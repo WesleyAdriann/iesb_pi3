@@ -20,9 +20,8 @@ class Student():
         self.calc_average()
 
     def __repr__(self):
-        # subjects_notes = ", ".join([subject.note for subject in self.__subjects])
-        # return "notas: {subject_notes} - media: {:.2f}".format(subjects_notes, self.__average)
-        return "{:.2f}".format(self.__average)
+        repr_string = f'Age: {self.__age} | Average: {self.__average:.2f} | Favorite Subject: {self.__favorite_subject} | Subjects: {self.__subjects}'
+        return repr_string
 
     @property
     def average(self):
