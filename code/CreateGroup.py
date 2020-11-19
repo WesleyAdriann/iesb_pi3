@@ -74,10 +74,10 @@ class CreateGroup():
             cross_point = randint(0, self.__students_per_group - 1)
             father = self.__selected_groups[i]
             mother = self.__selected_groups[i+1]
-            print(f'BEFORE CROSSOVER: {father} {mother}')
+            print(f'BEFORE CROSSOVER: \n    {father} \n    {mother}')
             for i in range(cross_point):
                 father[i], mother[i] = mother[i], father[i]
-            print(f'AFTER CROSSOVER : {father} {mother}')
+            print(f'AFTER CROSSOVER : \n    {father} \n    {mother}')
             print(f'------')
 
     def mutate(self):
