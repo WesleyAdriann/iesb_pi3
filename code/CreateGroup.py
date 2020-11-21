@@ -20,24 +20,26 @@ class CreateGroup():
         return self.__groups
 
     def main(self, ngenerations = 3):
-        print('MAIN|\n')
+        print('MAIN')
         self.create_groups()
         for i in range(ngenerations):
-            print(f'N: {i}')
-            print(f'GROUPS: {self.__groups}')
+            print(f'EXECUTION N: {i}')
+            print(f'GROUPS:\n  {self.__groups}')
             self.fitness()
             self.roulette_selection()
             self.crossover()
             self.mutate()
-        print('Best group')
-        print(', '.join(self.__best_group))
+        self.get_best_group()
+        print(f'BEST GROUP:\n  {self.__best_group}')
 
     def create_groups(self):
+        print(f'CREATING GROUPS')
         for i in range(self.__ngroups):
             group = []
             for j in range(self.__students_per_group):
                 group.append(Student())
             self.__groups.append(group)
+            print(f'CREATED GROUP\n  {group}')
 
     def fitness(self):
         self.__fitness = []
@@ -67,6 +69,7 @@ class CreateGroup():
                 if random() <= probs[i]:
                     selected_groups.append(group)
                     break
+        print(f'SELECTED GROUPS:\n  {selected_groups}')
         self.__selected_groups = selected_groups
 
     def crossover(self):
@@ -74,25 +77,30 @@ class CreateGroup():
             cross_point = randint(0, self.__students_per_group - 1)
             father = self.__selected_groups[i]
             mother = self.__selected_groups[i+1]
-            print(f'BEFORE CROSSOVER: \n    {father} \n    {mother}')
+            print(f'MUTATION POINT  :{cross_point}')
+            print(f'BEFORE CROSSOVER:\n  {father}\n  {mother}')
             for i in range(cross_point):
                 father[i], mother[i] = mother[i], father[i]
-            print(f'AFTER CROSSOVER : \n    {father} \n    {mother}')
+            print(f'AFTER CROSSOVER:\n  {father}\n  {mother}')
             print(f'------')
 
     def mutate(self):
         for group in self.__groups:
             if(random() >= self.__rate_mutation):
                 student = randint(0, self.__students_per_group - 1)
-                print(f'BEFORE MUTATE: {group[student]}')
+                print(f'BEFORE MUTATE:\n  {group[student]}')
                 group[student].mutate()
-                print(f'AFTER MUTATE : {group[student]}')
+                print(f'AFTER MUTATE :\n  {group[student]}')
 
     def get_best_group(self):
-        pass
+        best_group_index = self.__fitness.index(max(self.__fitness))
+        print(f'ALL FITNESS:\n  {self.__fitness}')
+        print(f'BEST GROUPS:\n  {self.__fitness[best_group_index]}')
+        self.__best_group = self.__groups[best_group_index]
+
 
 if __name__ == "__main__":
-    ngroups = 5
-    student_per_group = 3
-    group = CreateGroup(ngroups, student_per_group, 6)
+    ngroups = 10
+    student_per_group = 5
+    group = CreateGroup(ngroups, student_per_group, 2)
     group.main()
