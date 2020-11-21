@@ -111,7 +111,7 @@ class CreateGroup():
 
 
 if __name__ == "__main__":
-    ngroups = 10
-    student_per_group = 5
-    group = CreateGroup(ngroups, student_per_group, 2)
-    group.main()
+    ngroups = 100
+    student_per_group = 10
+    group = CreateGroup(ngroups, student_per_group, 20)
+    group.main(10)

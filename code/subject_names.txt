@@ -1,4 +1,6 @@
 portugues
 matematica
-geografia
+artes
+ciencias
 historia
+educacao fisica

@@ -9,7 +9,7 @@ class Subject():
         self.__name = name
 
     def __repr__(self):
-        return "{}: {:.2f}".format(self.__name, self.__note)
+        return f'{self.__name}: {self.__note:.2f}'
 
     @property
     def note(self):

@@ -20,7 +20,7 @@ class Student():
         self.__calc_average()
 
     def __repr__(self):
-        repr_string = f'< Age: {self.__age} | Average: {self.__average:.2f} | {self.__access_time} | Subjects: {self.__subjects} >\n'
+        repr_string = f'< Age: {self.__age} | Average: {self.__average:.2f} | Acess Time: {self.__access_time} | Subjects: {self.__subjects} >\n'
         return repr_string
 
     @property
