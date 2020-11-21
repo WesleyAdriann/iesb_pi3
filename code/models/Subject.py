@@ -4,7 +4,7 @@
 from random import uniform
 
 class Subject():
-    def __init__(self, name):
+    def __init__(self, name = ''):
         self.__note = uniform(0, 10.01)
         self.__name = name
 
@@ -16,4 +16,4 @@ class Subject():
         return self.__note
 
     def set_random_note(self):
-        self.__note = uniform(0, 11)
+        self.__note = uniform(0, 10.01)
