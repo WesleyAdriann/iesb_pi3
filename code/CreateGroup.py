@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from random import randint, random
+from math import sqrt
 from models.Student import Student
 
 class CreateGroup():
@@ -47,10 +48,20 @@ class CreateGroup():
             self.__fitness.append(self.fitness_fn(group))
 
     def fitness_fn(self, group):
-        fit = 0
-        for student in group:
-            fit = fit + student.average
-        return fit / self.__students_per_group
+        total_fit = 0
+        for i, student in enumerate(group):
+            start = i + 1
+            fit = 0
+            for j in range(start, len(group)):
+                euclidian_distance = sqrt(
+                    pow((group[j].age - student.age), 2) +
+                    pow((group[j].average - student.average), 2) +
+                    pow((group[j].access_time - student.access_time), 2)
+                )            
+                fit += euclidian_distance
+            total_fit += fit
+        print(f'TOTAL FITNESS:\n  {total_fit}')
+        return total_fit
 
     def roulette_selection(self):
         self.__selected_groups = []
@@ -93,7 +104,7 @@ class CreateGroup():
                 print(f'AFTER MUTATE :\n  {group[student]}')
 
     def get_best_group(self):
-        best_group_index = self.__fitness.index(max(self.__fitness))
+        best_group_index = self.__fitness.index(min(self.__fitness))
         print(f'ALL FITNESS:\n  {self.__fitness}')
         print(f'BEST GROUPS:\n  {self.__fitness[best_group_index]}')
         self.__best_group = self.__groups[best_group_index]
