@@ -1,7 +1,7 @@
 
 # -*- coding: utf-8 -*-
 
-from random import uniform, randint
+from random import randint
 from os import path
 
 from models.Subject import Subject
@@ -13,13 +13,13 @@ class Student():
 
     def __init__(self):
         print('Creating Student')
-        self.__subjects = [Subject(subject) for subject in self.__subjects_list]
-        self.__age = randint(18, 60)
+        self.__subjects = [Subject(subject_name) for subject_name in self.__subjects_list]
+        self.__age = randint(10, 20)
         self.__average = 0
         self.__calc_average()
 
     def __repr__(self):
-        repr_string = f'Age: {self.__age} | Average: {self.__average:.2f} | Subjects: {self.__subjects}'
+        repr_string = f'< Age: {self.__age} | Average: {self.__average:.2f} | Subjects: {self.__subjects} >\n'
         return repr_string
 
     @property
@@ -35,9 +35,7 @@ class Student():
         self.__calc_average()
 
     def __mutate_age(self):
-        self.__age = randint(18, 60)
-
-
+        self.__age = randint(10, 20)
 
     def __calc_average(self):
         subjects_notes = [subject.note for subject in self.__subjects]
