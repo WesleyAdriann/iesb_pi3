@@ -42,8 +42,10 @@ docker-compose up --build
   - Github: [brunoteodoromota](https://github.com/brunoteodoromota)
 - Lucas Simplicio
   - Github: [lucas0806](https://github.com/lucas0806) 
+- Médard TOSSOU
+  - Github: [YanisToss](https://github.com/YanisToss)
 - Wesley Adriann
-  - Github: [wesleyadriann](https://github.com/WesleyAdriann)
+  - Github: [WesleyAdriann](https://github.com/WesleyAdriann)
 
 ## Project Status
 
