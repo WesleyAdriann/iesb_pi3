@@ -11,6 +11,9 @@ class Subject():
     def __repr__(self):
         return f'{self.__name}: {self.__note:.2f}'
 
+    def __radd__(self, other):
+        return self.__note + other
+    
     @property
     def note(self):
         return self.__note

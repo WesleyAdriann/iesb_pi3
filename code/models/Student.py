@@ -50,5 +50,4 @@ class Student():
         self.__access_time = randint(0, 240)
 
     def __calc_average(self):
-        subjects_notes = [subject.note for subject in self.__subjects]
-        self.__average = sum(subjects_notes) / len(subjects_notes)
+        self.__average = sum(self.__subjects) / len(self.__subjects)
