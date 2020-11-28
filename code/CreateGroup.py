@@ -6,15 +6,17 @@ from math import sqrt
 from models.Student import Student
 
 class CreateGroup():
-    def __init__(self, ngroups, students_per_group, roulette_rounds = 2, rate_mutation = 0.5):
+    def __init__(self, ngroups, students_per_group, rate_mutation = 0.5, roulette_rounds = 2, scale_factor = 100):
         self.__ngroups = ngroups
         self.__groups = []
         self.__best_group = []
+        self.__best_fitness = 0
         self.__fitness = []
         self.__selected_groups = []
         self.__students_per_group = students_per_group
         self.__rate_mutation = rate_mutation
         self.__roulette_rounds = roulette_rounds
+        self.__scale_factor = scale_factor
 
     @property
     def groups(self):
@@ -46,22 +48,22 @@ class CreateGroup():
         self.__fitness = []
         for group in self.__groups:
             self.__fitness.append(self.fitness_fn(group))
+        print(f'GROUPS FITNESS:  \n{self.__fitness}')
 
     def fitness_fn(self, group):
-        total_fit = 0
+        total_euclidian_distance = 0
         for i, student in enumerate(group):
             start = i + 1
-            fit = 0
+            distance_acc = 0
             for j in range(start, len(group)):
                 euclidian_distance = sqrt(
                     pow((group[j].age - student.age), 2) +
                     pow((group[j].average - student.average), 2) +
                     pow((group[j].access_time - student.access_time), 2)
                 )            
-                fit += euclidian_distance
-            total_fit += fit
-        print(f'TOTAL FITNESS:\n  {total_fit}')
-        return total_fit
+                distance_acc += euclidian_distance
+            total_euclidian_distance += distance_acc
+        return self.__scale_factor / (1 + total_euclidian_distance) 
 
     def roulette_selection(self):
         self.__selected_groups = []
@@ -104,9 +106,10 @@ class CreateGroup():
                 print(f'AFTER MUTATE :\n  {group[student]}')
 
     def get_best_group(self):
-        best_group_index = self.__fitness.index(min(self.__fitness))
+        best_group_index = self.__fitness.index(max(self.__fitness))
         print(f'ALL FITNESS:\n  {self.__fitness}')
         print(f'BEST GROUPS:\n  {self.__fitness[best_group_index]}')
+        self.__best_fitness = self.__fitness[best_group_index]
         self.__best_group = self.__groups[best_group_index]
 
 
