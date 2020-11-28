@@ -60,10 +60,10 @@ class CreateGroup():
                     pow((group[j].age - student.age), 2) +
                     pow((group[j].average - student.average), 2) +
                     pow((group[j].access_time - student.access_time), 2)
-                )            
+                )
                 distance_acc += euclidian_distance
             total_euclidian_distance += distance_acc
-        return self.__scale_factor / (1 + total_euclidian_distance) 
+        return self.__scale_factor / (1 + total_euclidian_distance)
 
     def roulette_selection(self):
         self.__selected_groups = []

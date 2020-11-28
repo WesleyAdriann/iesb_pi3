@@ -13,7 +13,7 @@ class Subject():
 
     def __radd__(self, other):
         return self.__note + other
-    
+
     @property
     def note(self):
         return self.__note
