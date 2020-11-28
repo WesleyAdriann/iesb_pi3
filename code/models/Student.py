@@ -12,11 +12,11 @@ class Student():
     __subjects_list = __subjects_list if len(__subjects_list) else read_file(path.abspath('subject_names.txt'))
 
     def __init__(self):
-        print('Creating Student')
         self.__subjects = [Subject(subject_name) for subject_name in self.__subjects_list]
         self.__age = randint(10, 20)
         self.__average = 0
         self.__access_time = randint(0, 240)
+        self.__normalize_value = 0
         self.__calc_average()
 
     def __repr__(self):
@@ -35,6 +35,10 @@ class Student():
     def access_time(self):
         return self.__access_time
 
+    @property
+    def normalize_value(self):
+        return self.__normalize_value
+
     def mutate(self):
         mutations_types = [self.__mutate_note, self.__mutate_age, self.__mutate_access_time]
         mutations_types[randint(0, len(mutations_types) - 1)]()
@@ -51,3 +55,10 @@ class Student():
 
     def __calc_average(self):
         self.__average = sum(self.__subjects) / len(self.__subjects)
+
+    def normalize(self, min_age, max_age, min_average, max_average, min_access_time, max_access_time):
+        self.__normalize_value = (
+            ((self.__age - min_age) / (max_age - min_age)) +
+            ((self.__average - min_average) / (max_average - min_average)) +
+            ((self.__access_time - min_access_time) / (max_access_time - min_access_time))
+        )
