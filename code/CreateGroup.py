@@ -6,12 +6,14 @@ from math import sqrt
 from models.Student import Student
 
 class CreateGroup():
-    def __init__(self, ngroups, students_per_group, rate_mutation = 0.5, roulette_rounds = 2, scale_factor = 100):
+    def __init__(self, ngroups, students_per_group, rate_mutation = 0.03, roulette_rounds = 20, scale_factor = 100):
         self.__ngroups = ngroups
         self.__groups = []
         self.__best_group = []
-        self.__best_fitness = 0
         self.__fitness = []
+        self.__best_fitness = 0
+        self.__euclidian_distance = []
+        self.__best_euclidian_distance = 0
         self.__selected_groups = []
         self.__students_per_group = students_per_group
         self.__rate_mutation = rate_mutation
@@ -21,6 +23,10 @@ class CreateGroup():
     @property
     def groups(self):
         return self.__groups
+
+    @property
+    def best_euclidian_distance(self):
+        return self.__best_euclidian_distance
 
     def main(self, ngenerations = 3):
         print('MAIN')
@@ -33,7 +39,9 @@ class CreateGroup():
             self.crossover()
             self.mutate()
         self.get_best_group()
-        print(f'BEST GROUP:\n  {self.__best_group}')
+        # print(f'BEST GROUP:\n  {self.__best_group}')
+        print(f'BEST EUCLIDIAN DISTANCE:\n  {self.__best_euclidian_distance}')
+        print(f'BEST FITNESS:\n  {self.__best_fitness}')
 
     def create_groups(self):
         print(f'CREATING GROUPS')
@@ -46,8 +54,27 @@ class CreateGroup():
 
     def fitness(self):
         self.__fitness = []
+        ages = []
+        access_times = []
+        averages = []
         for group in self.__groups:
-            self.__fitness.append(self.fitness_fn(group))
+            for student in group:
+                ages.append(student.age)
+                access_times.append(student.access_time)
+                averages.append(student.average)
+
+        min_age, max_age = min(ages), max(ages)
+        min_access_times, max_access_times = min(access_times), max(access_times)
+        min_average, max_average = min(averages), max(averages)
+
+        for group in self.__groups:
+            for student in group:
+                student.normalize(min_age, max_age, min_access_times, max_access_times, min_average, max_average)
+
+        for group in self.__groups:
+            euclidian_distance, fitness = self.fitness_fn(group)
+            self.__fitness.append(fitness)
+            self.__euclidian_distance.append(euclidian_distance)
         print(f'GROUPS FITNESS:  \n{self.__fitness}')
 
     def fitness_fn(self, group):
@@ -57,13 +84,11 @@ class CreateGroup():
             distance_acc = 0
             for j in range(start, len(group)):
                 euclidian_distance = sqrt(
-                    pow((group[j].age - student.age), 2) +
-                    pow((group[j].average - student.average), 2) +
-                    pow((group[j].access_time - student.access_time), 2)
+                    pow((group[j].normalize_value - student.normalize_value), 2)
                 )
                 distance_acc += euclidian_distance
             total_euclidian_distance += distance_acc
-        return self.__scale_factor / (1 + total_euclidian_distance)
+        return [total_euclidian_distance, self.__scale_factor / (1 + total_euclidian_distance)]
 
     def roulette_selection(self):
         self.__selected_groups = []
@@ -108,13 +133,6 @@ class CreateGroup():
     def get_best_group(self):
         best_group_index = self.__fitness.index(max(self.__fitness))
         print(f'ALL FITNESS:\n  {self.__fitness}')
-        print(f'BEST GROUPS:\n  {self.__fitness[best_group_index]}')
+        self.__best_euclidian_distance = self.__euclidian_distance[best_group_index]
         self.__best_fitness = self.__fitness[best_group_index]
         self.__best_group = self.__groups[best_group_index]
-
-
-if __name__ == "__main__":
-    ngroups = 100
-    student_per_group = 10
-    group = CreateGroup(ngroups, student_per_group, 20)
-    group.main(10)
