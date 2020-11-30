@@ -2,7 +2,10 @@ IESB - PI3
 ===
 
 ## Description
-Optimization project to create study groups in virtual learning environments developed in PI3 from IESB using genetic algorithms
+Optimization project to create study groups in virtual learning environments using genetic algorithms developed in PI3 from IESB
+
+## Chromosomes structure
+![](./assets/chromosome.png)
 
 ## Prerequisites
 
@@ -12,7 +15,7 @@ Optimization project to create study groups in virtual learning environments dev
 ### Python CLI
 Inside the */code* directory execute
 ```bash
-python3 CreateGroup.py
+python3 Tests.py
 ```
 
 ### Docker
@@ -41,7 +44,7 @@ docker-compose up --build
 - Bruno Teodoro
   - Github: [brunoteodoromota](https://github.com/brunoteodoromota)
 - Lucas Simplicio
-  - Github: [lucas0806](https://github.com/lucas0806) 
+  - Github: [lucas0806](https://github.com/lucas0806)
 - Médard TOSSOU
   - Github: [YanisToss](https://github.com/YanisToss)
 - Wesley Adriann
