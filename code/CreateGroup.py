@@ -6,7 +6,7 @@ from math import sqrt
 from models.Student import Student
 
 class CreateGroup():
-    def __init__(self, ngroups, students_per_group, rate_mutation = 0.03, roulette_rounds = 20, scale_factor = 100):
+    def __init__(self, ngroups, students_per_group, rate_mutation = 0.6, rate_crossover = 0.1, roulette_rounds = 20, scale_factor = 100):
         self.__ngroups = ngroups
         self.__groups = []
         self.__best_group = []
@@ -19,6 +19,7 @@ class CreateGroup():
         self.__rate_mutation = rate_mutation
         self.__roulette_rounds = roulette_rounds
         self.__scale_factor = scale_factor
+        self.__rate_crossover = rate_crossover
 
     @property
     def groups(self):
@@ -27,6 +28,10 @@ class CreateGroup():
     @property
     def best_euclidian_distance(self):
         return self.__best_euclidian_distance
+
+    @property
+    def best_fitness(self):
+        return self.__best_fitness
 
     def main(self, ngenerations = 3):
         print('MAIN')
@@ -112,19 +117,20 @@ class CreateGroup():
 
     def crossover(self):
         for i in range(0, len(self.__selected_groups), 2):
-            cross_point = randint(0, self.__students_per_group - 1)
-            father = self.__selected_groups[i]
-            mother = self.__selected_groups[i+1]
-            print(f'MUTATION POINT  :{cross_point}')
-            print(f'BEFORE CROSSOVER:\n  {father}\n  {mother}')
-            for i in range(cross_point):
-                father[i], mother[i] = mother[i], father[i]
-            print(f'AFTER CROSSOVER:\n  {father}\n  {mother}')
-            print(f'------')
+            if random() <=  self.__rate_crossover:
+                cross_point = randint(0, self.__students_per_group - 1)
+                father = self.__selected_groups[i]
+                mother = self.__selected_groups[i+1]
+                print(f'MUTATION POINT  :{cross_point}')
+                print(f'BEFORE CROSSOVER:\n  {father}\n  {mother}')
+                for i in range(cross_point):
+                    father[i], mother[i] = mother[i], father[i]
+                print(f'AFTER CROSSOVER:\n  {father}\n  {mother}')
+                print(f'------')
 
     def mutate(self):
         for group in self.__groups:
-            if(random() >= self.__rate_mutation):
+            if random() <= self.__rate_mutation:
                 student = randint(0, self.__students_per_group - 1)
                 print(f'BEFORE MUTATE:\n  {group[student]}')
                 group[student].mutate()
