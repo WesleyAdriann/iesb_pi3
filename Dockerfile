@@ -4,4 +4,4 @@ WORKDIR /code
 
 COPY ./code .
 
-ENTRYPOINT python3 ./CreateGroup.py
+ENTRYPOINT python3 ./Tests.py
