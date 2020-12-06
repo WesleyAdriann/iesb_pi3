@@ -4,12 +4,11 @@
 from random import uniform
 
 class Subject():
-    def __init__(self, name = ''):
+    def __init__(self):
         self.__note = uniform(0, 10.01)
-        self.__name = name
 
     def __repr__(self):
-        return f'{self.__name}: {self.__note:.2f}'
+        return f'{self.__note:.2f}'
 
     def __radd__(self, other):
         return self.__note + other

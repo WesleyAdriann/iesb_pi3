@@ -8,11 +8,8 @@ from models.Subject import Subject
 from utils.read_file import read_file
 
 class Student():
-    __subjects_list = []
-    __subjects_list = __subjects_list if len(__subjects_list) else read_file(path.abspath('subject_names.txt'))
-
-    def __init__(self):
-        self.__subjects = [Subject(subject_name) for subject_name in self.__subjects_list]
+    def __init__(self, nsubjects = 6):
+        self.__subjects = [Subject()]*nsubjects
         self.__age = randint(10, 20)
         self.__average = 0
         self.__access_time = randint(0, 240)
