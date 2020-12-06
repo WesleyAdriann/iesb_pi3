@@ -42,7 +42,6 @@ class CreateGroup():
         self.create_groups()
         for i in range(ngenerations):
             print(f'EXECUTION N: {i}')
-            print(f'GROUPS:\n  {self.__groups}')
             self.fitness()
             self.roulette_selection()
             self.crossover()
@@ -61,10 +60,7 @@ class CreateGroup():
             print(f'CREATED GROUP\n  {group}')
 
     def fitness(self):
-        self.__fitness = []
-        ages = []
-        access_times = []
-        averages = []
+        ages, access_times, averages = [], [], []
         for group in self.__groups:
             for student in group:
                 ages.append(student.age)
@@ -79,6 +75,8 @@ class CreateGroup():
             for student in group:
                 student.normalize(min_age, max_age, min_access_times, max_access_times, min_average, max_average)
 
+        self.__fitness = []
+        self.__euclidian_distance = []
         for group in self.__groups:
             euclidian_distance, fitness = self.fitness_fn(group)
             self.__fitness.append(fitness)
@@ -91,9 +89,7 @@ class CreateGroup():
             start = i + 1
             distance_acc = 0
             for j in range(start, len(group)):
-                euclidian_distance = sqrt(
-                    pow((group[j].normalize_value - student.normalize_value), 2)
-                )
+                euclidian_distance = sqrt(pow((group[j].normalize_value - student.normalize_value), 2))
                 distance_acc += euclidian_distance
             total_euclidian_distance += distance_acc
         return [total_euclidian_distance, self.__scale_factor / (1 + total_euclidian_distance)]
