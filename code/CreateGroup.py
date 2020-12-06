@@ -33,6 +33,10 @@ class CreateGroup():
     def best_fitness(self):
         return self.__best_fitness
 
+    @property
+    def best_group(self):
+        return self.__best_group
+
     def main(self, ngenerations = 3):
         print('MAIN')
         self.create_groups()
@@ -44,7 +48,6 @@ class CreateGroup():
             self.crossover()
             self.mutate()
         self.get_best_group()
-        # print(f'BEST GROUP:\n  {self.__best_group}')
         print(f'BEST EUCLIDIAN DISTANCE:\n  {self.__best_euclidian_distance}')
         print(f'BEST FITNESS:\n  {self.__best_fitness}')
 
