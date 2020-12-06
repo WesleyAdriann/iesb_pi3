@@ -5,7 +5,6 @@ from random import randint
 from os import path
 
 from models.Subject import Subject
-from utils.read_file import read_file
 
 class Student():
     def __init__(self, nsubjects = 6):
