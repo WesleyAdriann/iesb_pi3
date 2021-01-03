@@ -52,7 +52,7 @@ docker-compose up --build
 
 ## Project Status
 
-- **Development**
+- **[Finalized](https://github.com/WesleyAdriann/iesb_pi3/releases/tag/v1.0.2)**
 
 ## URL Project Reference
 
